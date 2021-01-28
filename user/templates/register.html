@@ -1,0 +1,16 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+
+{% block main_content %}
+    <link rel="stylesheet" href="{% static 'css/styles_user.css'%}">
+
+    <div class="main-container">
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            {{ register }}
+            <input type="submit" value="Iniciar sesión">
+        </form>
+    </div>
+    
+{% endblock %}

@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles-app-tables.css' %}">
+</head>
+<body>
+    <header>
+        <h1>VOCABULARIO EFECTIVO</h1>
+
+        <div class="main-container">
+            <div class="container-menu">
+                <ul>
+                    <li><a href="{% url 'log_in' %}">Iniciar Sesión</a></li>
+                    <li><a href="{% url 'user' %}">Usuario</a></li>
+                    <li><a href="{% url 'title' user_id=10 %}">Nueva Tabla</a></li>
+                    <li><a href="{% url 'table_collection' %}">Mis tablas</a></li>
+                </ul>
+            </div>
+        
+            <div class="container-tables">
+                    
+                {% block main_content %}
+
+                {% endblock %}
+                
+            </div>
+        </div>
+    </header>
+</body>
+</html>

@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+header {
+  width: 100%;
+  height: 70px;
+  line-height: 70px;
+  background-color: rgb(20, 19, 19);
+}
+h1 {
+  color: white;
+  text-align: center;
+}
+.main-container {
+  display: flex;
+  justify-content: space-between;
+}
+.main-container div.container-menu {
+  flex-basis: 16%;
+  height: 100vh;
+  background-color: red;
+}
+.main-container div.container-menu ul li {
+  width: 95%;
+  background-color: green;
+  height: 25px;
+  line-height: 25px;
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 5px;
+}
+.main-container div.container-menu ul li a {
+  display: block;
+  color: white;
+  text-decoration: none;
+}
+.main-container div.container-tables {
+  flex-basis: 83%;
+}

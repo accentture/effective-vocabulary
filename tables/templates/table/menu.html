@@ -1,0 +1,18 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+
+{% block main_content %}
+    
+    <h2>{{title}}</h2>    
+
+    <ul class="menu-table">
+        <li><a href="{% url 'create_vocabulary' user_id=user_id  table_id=table_id  title=title %}">Crear vocabulario asociado</a></li>
+        <li><a href="{% url 'word_list' user_id=user_id  table_id=table_id  title=title %}">Ver vocabulario</a></li>
+    </ul>
+
+    {% block content_table %}
+
+    {% endblock %}
+    
+    <script src="{% static 'js/content.js' %}"></script>
+{% endblock %}

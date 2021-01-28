@@ -1,0 +1,35 @@
+{% extends 'table/menu.html' %}
+
+{% block content_table %}
+    <!-- <form action="{ url 'table' }{{box}}/{{user_id}}" method="POST"> : other way to pass params -->
+
+    <div class="table-container">
+        {% include 'includes/description.html' %}
+        
+        <div class="row-content">
+            <form class="form-of-words" action="" method="POST">
+
+                <div class="field">
+                    <label for="english_word"></label>
+                    <input type="text" name="english_word">
+                </div>
+                <div class="field">
+                    <label for="espanish_word"></label>
+                    <input type="text" name="spanish_word">
+                </div>
+                <div class="field">
+                    <label for="inverosimil_relation"></label>
+                    <textarea  name="inverosimil_relation"></textarea>
+                </div>
+
+                <div class="button">
+                    <input type="submit" value="Enviar">
+                </div>
+
+                <span>{% csrf_token %}</span>
+            </form>
+        </div>
+    </div>
+    <button class="button-add">Añadir fila</button>
+
+{% endblock %}

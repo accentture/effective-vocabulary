@@ -1,0 +1,28 @@
+.form-container {
+  width: 50%;
+  margin: 0 auto;
+}
+.form-container div input,
+input {
+  width: 100%;
+  height: 40px;
+  padding-left: 5px;
+}
+.form-container div.button {
+  text-align: center;
+}
+.form-container div.button button {
+  width: 50%;
+  height: 40px;
+  background-color: rgb(15, 102, 15);
+  font-size: 16px;
+  cursor: pointer;
+}
+.form-container div.button button:hover {
+  background-color: rgb(37, 146, 37);
+}
+.form-container div.button button a {
+  display: block;
+  color: white;
+  text-decoration: none;
+}
