@@ -5,8 +5,8 @@ from django import forms
 from django.core import validators
 
 class RegisterForm(forms.Form) :
-    names = forms.CharField(
-        label = 'Nombres',
+    username = forms.CharField(
+        label = 'Nombre de usuario',
         max_length = 100,
         required = True,
 
@@ -17,7 +17,7 @@ class RegisterForm(forms.Form) :
         )
     )
 
-    surnames = forms.CharField(
+    last_name = forms.CharField(
         label = 'Apellidos',
         max_length = 100,
         required = True,
@@ -46,7 +46,7 @@ class RegisterForm(forms.Form) :
         ]
     )
 
-    country = forms.CharField(
+    """ country = forms.CharField(
         label = 'Pais',
         max_length = 100,
         required = True,
@@ -68,7 +68,7 @@ class RegisterForm(forms.Form) :
                 'placeholder' : 'Qué idioma quieres aprender'
             }
         )
-    )
+    ) """
 
     password = forms.CharField(
         label = 'Contraseña',

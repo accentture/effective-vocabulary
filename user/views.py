@@ -4,27 +4,34 @@ from django.shortcuts import render, redirect
 from user.forms import RegisterForm
 # Create your views here.
 
+# importing View
+from django.views.generic import View, TemplateView, ListView
+
 #models
 from user.models import User
 
 
 #using form in the template
-def log_in(request) :
-    email = ''
-    password = ''
 
-    if request.method == 'POST' :
+class LoginView(TemplateView):
+    template_name = 'log_in.html'
 
-        email = request.POST['email']
-        print('------------------------------', type(email))
-        password = request.POST['password']
-        user = User.objects.filter(email = email, password = password)
-        print('---------------------------------', user)
-        if user :
-                                    # when send param using redirect, it is important to use ""
-            return redirect('title', user_id = user[0].id)
+    def get(self, request) :
+        return render(request, self.template_name)
 
-    return render(request, 'log_in.html')
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST' :
+
+            email = request.POST['email']
+            print('------------------------------', type(email))
+            password = request.POST['password']
+            _user = User.objects.filter(email = email, password = password)
+            print('---------------------------------', _user)
+            if _user :
+                                        # when send param using redirect, it is important to use ""
+                return redirect('title', user_id = _user[0].id)
+
+    
 
 def register(request) :
     user_register = RegisterForm()

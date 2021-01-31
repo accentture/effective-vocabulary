@@ -4,8 +4,15 @@
     <div class="table-container">
         {% include 'includes/description.html' %}
         
-    </div>
+        <!-- after to use ListView, to iterate the elements use object_list -->
+        {% for word in object_list %}
+            <ul class="word_list">
+                <li>{{word.english_word}}</li>
+                <li>{{word.spanish_word}}</li>
+                <li>{{word.inverosimil_relation}}</li>
+            </ul>
+        {% endfor %}
 
-    
+    </div>
 
 {% endblock %}

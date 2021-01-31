@@ -4,20 +4,23 @@ from django import forms
 # for validations
 from django.core import validators
 
-class WordForm(forms.Form) :
-    english_word = forms.CharField(
-        max_length = 1000,
-        required = True,
-    )
+from django.forms import ModelForm
+from .models import Word
 
-    spanish_word = forms.CharField(
-        max_length = 1000,
-        required = True,
-    )
+class WordForm(ModelForm):
+    class Meta:
+        model = Word
+        fields = ['english_word', 'spanish_word', 'inverosimil_relation']
 
-    inverosimil_relation = forms.CharField(
-        max_length = 1000,
-        required = True,
-    )
+        # removing label tags
+        labels = {
+            'english_word' : '',
+            'spanish_word' : '',
+            'inverosimil_relation' : '',
+        }
+
+        
+        
+
 
 

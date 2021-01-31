@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 
-# Create your views here.
+# importing View
+from django.views.generic import View, TemplateView, ListView 
 
 # models
 from tables.models import Word, Table
@@ -9,59 +10,107 @@ from user.models import User
 #form
 from tables.forms import WordForm
 
-def title_table(request, user_id = -1) :
-    if request.method == 'POST' :
-        title = request.POST['title']
 
-        if len(title) > 0 and user_id > 0:
-            table = Table(
-                user_id = user_id,
-                title = title
-            )
-            table.save()
+class TitleTable(TemplateView) : 
+    template_name = 'table/title.html'
 
-            print('-----------------title talbe----------', type(table.id) )
+    def get(self, request, *args, **kwargs) :
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs): 
+        user_id = kwargs['user_id']
+
+        if request.method == 'POST' :
+            title = request.POST['title']
+
+            if len(title) > 0 and user_id > 0:
+                table = Table(
+                    user_id = user_id,
+                    title = title
+                )
+                table.save()
+                mytable = Table.objects.filter(user_id = user_id)
+                print('-----------------title talbe----------', mytable[0].id )
 
             return redirect('menu', user_id = user_id, table_id = table.id, title = table.title)
-        
-    return render(request, 'table/title.html')
 
-def menu(request, user_id, table_id, title) : 
+class MenuView(TemplateView) :
+    template_name = 'table/menu.html'
+    def get(self, request, *args, **kwargs) : 
+        user_id = kwargs['user_id']
+        table_id = kwargs['table_id']
+        title = kwargs['title']
 
-    return render(request, 'table/menu.html', {
-        'user_id':user_id,
-        'table_id': table_id,
-        'title': title
-    })
+        return render(request, self.template_name, {
+            'user_id':user_id,
+            'table_id': table_id,
+            'title': title
+        })
 
-def create_vocabulary(request, user_id, table_id, title) :
-    word_form = WordForm
+class CreateVocabularyWiew(View):
+    #django know that method use : get, post, put, delete; it is thanks to dispacht() method
 
-    if request.method == 'POST' : 
-        
-        new_word = Word(
-            table_id = table_id,
-            english_word = request.POST['english_word'],
-            spanish_word = request.POST['spanish_word'],
-            inverosimil_relation = request.POST['inverosimil_relation'],
-        )
-        new_word.save()          
+    def get(self, request, *args, **kwargs) : # **kwargs : keys of aditional arguments
+        form = WordForm()
+        user_id = kwargs['user_id']
+        table_id = kwargs['table_id']
+        title = kwargs['title']       
 
-    return render(request, 'table/create vocabulary.html', {
-        'word_form': word_form,
-        'user_id': user_id,
-        'table_id': table_id,
-        'title':title
-    })
+        return render(request, 'table/create vocabulary.html', {
+            'form': form,
+            'user_id': user_id,
+            'table_id': table_id,
+            'title':title
+        })
 
-def word_list(request, user_id, table_id, title) :
-    # words = Word.objects.filter(user_id = user_id, title = title)
-    # print('---------------------word lis-----------------------', words)
-    return render(request, 'table/word list.html',{
-        'user_id': user_id,
-        'table_id':table_id,
-        'title':title
-    })
+    def post(self, request, *args, **kwargs):
+        user_id = kwargs['user_id']
+        table_id = kwargs['table_id']
+        title = kwargs['title']
+
+        if request.method == 'POST' : 
+            form = WordForm(request.POST)
+
+            if form.is_valid() :
+                form.save() 
+                return redirect('create_vocabulary', user_id = user_id, table_id = table_id, title = title)
+             
+
+    def put(self, request):
+        pass
+
+    def delete(self, request):
+        pass
+
+
+#to use here ListView
+
+class WordListView(ListView):
+    #to specify name of model to get
+    model = Word
+
+    template_name = 'table/word list.html'
+    
+    #setting name of param to send to context
+    context_object_name = 'word_collection'
+
+    #it receive the query
+    queryset = Word.objects.all()
+    print('--------word list--------', queryset)
+
+    def get(self, request, *args, **kwargs) :
+        user_id = kwargs['user_id']
+        table_id = kwargs['table_id']
+        title = kwargs['title']
+        # word_collection = Word.objects.filter(table_id = table_id)
+
+        print('---------------------word lis-----------------------', table_id)
+        return render(request, self.template_name, {
+            'user_id': user_id,
+            'table_id':table_id,
+            'title':title,
+            'word_collection': self.queryset
+        })
 
 def table_collection(request) : 
 

@@ -1,4 +1,6 @@
 /* ================================================== menu of table */
+/* general styles */
+
 ul.menu-table {
   display: flex;
   justify-content: space-between;
@@ -16,46 +18,69 @@ ul.menu-table li a {
   color: white;
   text-decoration: none;
 }
-/* content of table */
+/* ========================================== content of table */
 .table-container {
   width: 99%;
   min-height: 80px;
   border: 2px solid brown;
 }
+/* field description of table */
 .table-container ul {
   display: flex;
-  width: 55%;
   height: 30px;
   line-height: 30px;
   display: flex;
   justify-content: space-evenly;
+}
+.table-container ul.description {
+  width: 55%;
 }
 
 .table-container ul li {
   list-style: none;
 }
-div.row-content form.form-of-words {
+
+/* styles forms */
+form.form-of-words {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
-.field,
-.button {
-  height: 30px;
-  line-height: 30px;
+form.form-of-words p {
+  margin-left: 15px;
+  margin-right: 15px;
 }
-.field textarea {
-  width: 600px;
+form.form-of-words p:first-child {
+  margin-left: 30px;
 }
-.field input,
-textarea {
-  height: 100%;
+
+/* textarea ckeditor */
+
+form.form-of-words p input[type="text"] {
+  width: 150px;
 }
 .button {
   width: 100px;
+  height: 30px;
+  line-height: 30px;
 }
 .button input[type="submit"] {
   width: 100%;
   height: 100%;
   background-color: green;
   color: white;
+}
+
+/* ============================================ word list */
+ul.word_list {
+  border: 2px solid blue;
+}
+ul.word_list li {
+  width: 80px;
+  border: 2px solid purple;
+  text-align: center;
+}
+ul.word_list li:last-child {
+  width: 630px;
+  text-align: left;
+  border: 2px solid red;
 }

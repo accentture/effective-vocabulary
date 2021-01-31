@@ -1,0 +1,9 @@
+{% extends 'layouts/layout.html' %}
+
+{% block main_content %}
+    <form action="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Enviar demo register">
+    </form>
+{% endblock %}
