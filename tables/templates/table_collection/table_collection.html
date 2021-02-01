@@ -1,7 +1,12 @@
 {% extends 'layouts/layout.html' %}
-       
-{% block main_content %}
-        <h3>Tablas creadas</h3>
 
-        <p>asfasfasdfas</p>
+{% block main_content %}
+    <h2>Tablas creadas</h2>
+    <ul class="table-collection">
+        
+        {% for table in tables %}
+            <li><a href="{% url 'word_list' table_id=table.id  title=table.title %}">{{table.title|upper}}</a></li>
+        {% endfor %}
+
+    </ul>
 {% endblock %}

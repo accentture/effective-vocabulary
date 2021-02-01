@@ -5,13 +5,20 @@
         {% include 'includes/description.html' %}
         
         <!-- after to use ListView, to iterate the elements use object_list -->
-        {% for word in object_list %}
-            <ul class="word_list">
-                <li>{{word.english_word}}</li>
-                <li>{{word.spanish_word}}</li>
-                <li>{{word.inverosimil_relation}}</li>
-            </ul>
-        {% endfor %}
+        {{object_list}}
+
+        {% if word_collection|length > 0 %}
+            {% for word in word_collection %}
+                <ul class="word_list">
+                    <li>{{word.english_word}}</li>
+                    <li>{{word.spanish_word}}</li>
+                    <li>{{word.inverosimil_relation|safe}}</li>
+                </ul>
+            {% endfor %}
+
+        {% else %}
+            <p>No hay palabras disponibles</p>
+        {% endif %}
 
     </div>
 

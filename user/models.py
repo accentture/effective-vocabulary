@@ -1,17 +1,12 @@
 from django.db import models
+from django.dispatch import receiver
 
-# Create your models here.
+#user provided by django
+from django.contrib.auth.models import User
 
-class User(models.Model) :
-    id = models.AutoField(primary_key=True)
-    names = models.CharField(max_length = 100)
-    surnames = models.CharField(max_length = 100)
-    email = models.EmailField(max_length = 1000, unique = True)
-    country = models.CharField(max_length = 100)
-    language = models.CharField(max_length = 100)
-    password = models.CharField(max_length = 1000, default = 'null')
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    language = models.CharField(max_length = 255)
 
-    # to upload image
-    image = models.ImageField(default = 'null', upload_to = 'users')
 
 

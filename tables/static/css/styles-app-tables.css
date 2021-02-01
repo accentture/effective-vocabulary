@@ -5,8 +5,9 @@ ul.menu-table {
   display: flex;
   justify-content: space-between;
 }
-ul.menu-table li {
-  width: 150px;
+ul.menu-table li,
+ul.table-collection li {
+  min-width: 150px;
   height: 40px;
   line-height: 40px;
   text-align: center;
@@ -14,7 +15,11 @@ ul.menu-table li {
   border-radius: 5px;
   list-style: none;
 }
-ul.menu-table li a {
+ul.table-collection li {
+  margin-bottom: 10px;
+}
+ul.menu-table li a,
+ul.table-collection li a {
   color: white;
   text-decoration: none;
 }

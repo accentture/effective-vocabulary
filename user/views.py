@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 
 #forms
-from user.forms import RegisterForm
-# Create your views here.
+from user.forms import UserForm, UserProfileForm
 
 # importing View
 from django.views.generic import View, TemplateView, ListView
@@ -10,53 +9,61 @@ from django.views.generic import View, TemplateView, ListView
 #models
 from user.models import User
 
+#modules of authentication
+from django.contrib.auth import authenticate, login, logout
 
-#using form in the template
+#flash messages
+from django.contrib import messages
 
-class LoginView(TemplateView):
+
+def register(request) :
+    user_form = UserForm()
+    user_profile_form = UserProfileForm()
+
+    if request.method == 'POST' :
+        user_form = UserForm(request.POST)
+        user_profile_form = UserProfileForm(request.POST)
+
+        if user_form.is_valid() and user_profile_form.is_valid():
+            user = user_form.save()
+            print('-----------------register-----------', user)
+            user_profile_form = user_profile_form.save(commit = False)
+            user_profile_form.user = user
+            user_profile_form.save()
+
+            return redirect('user')
+
+    return render(request, 'register.html', {
+        'user_form': user_form, 
+        'user_profile_form':user_profile_form
+    })
+
+class LoginView(View):
     template_name = 'log_in.html'
 
-    def get(self, request) :
+    def get(self, request, *args, **kwargs) :
         return render(request, self.template_name)
 
+    
     def post(self, request, *args, **kwargs):
         if request.method == 'POST' :
 
-            email = request.POST['email']
-            print('------------------------------', type(email))
-            password = request.POST['password']
-            _user = User.objects.filter(email = email, password = password)
-            print('---------------------------------', _user)
-            if _user :
-                                        # when send param using redirect, it is important to use ""
-                return redirect('title', user_id = _user[0].id)
+            username = request.POST.get('username')
+            password = request.POST.get('password')
 
-    
+            user = authenticate(request, username = username, password = password)
+            print('------------------login---------------------', user)
 
-def register(request) :
-    user_register = RegisterForm()
+            if user :
+                messages.success(request, 'Bienvenido')
+                login(request, user)
+                return redirect('title')
 
-    if request.method == 'POST' :
-        user_register = RegisterForm(request.POST)
 
-        if user_register.is_valid() :
-            data_register = user_register.cleaned_data
+def user_logout(request):
+    logout(request)
+    return redirect('user')
 
-            user = User(
-                names = data_register['names'],
-                surnames = data_register['surnames'],
-                email = data_register['email'],
-                country = data_register['country'],
-                language = data_register['language'],
-                password = data_register['password']
-            )
-
-            user.save()
-            return redirect('main')
-
-    return render(request, 'register.html', {
-        'register':user_register
-    })
 
 def user(request) :
 

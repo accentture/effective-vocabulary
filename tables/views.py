@@ -18,31 +18,27 @@ class TitleTable(TemplateView) :
         return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs): 
-        user_id = kwargs['user_id']
 
         if request.method == 'POST' :
             title = request.POST['title']
 
-            if len(title) > 0 and user_id > 0:
+            if len(title) > 0 :
                 table = Table(
-                    user_id = user_id,
+                    user_id = request.user.id,
                     title = title
                 )
                 table.save()
-                mytable = Table.objects.filter(user_id = user_id)
-                print('-----------------title talbe----------', mytable[0].id )
 
-            return redirect('menu', user_id = user_id, table_id = table.id, title = table.title)
+
+            return redirect('menu', table_id = table.id, title = table.title)
 
 class MenuView(TemplateView) :
     template_name = 'table/menu.html'
     def get(self, request, *args, **kwargs) : 
-        user_id = kwargs['user_id']
         table_id = kwargs['table_id']
         title = kwargs['title']
 
         return render(request, self.template_name, {
-            'user_id':user_id,
             'table_id': table_id,
             'title': title
         })
@@ -52,19 +48,17 @@ class CreateVocabularyWiew(View):
 
     def get(self, request, *args, **kwargs) : # **kwargs : keys of aditional arguments
         form = WordForm()
-        user_id = kwargs['user_id']
         table_id = kwargs['table_id']
-        title = kwargs['title']       
+        title = kwargs['title']    
+        print('-----------------create----------', form)   
 
         return render(request, 'table/create vocabulary.html', {
             'form': form,
-            'user_id': user_id,
             'table_id': table_id,
             'title':title
         })
 
     def post(self, request, *args, **kwargs):
-        user_id = kwargs['user_id']
         table_id = kwargs['table_id']
         title = kwargs['title']
 
@@ -72,8 +66,12 @@ class CreateVocabularyWiew(View):
             form = WordForm(request.POST)
 
             if form.is_valid() :
-                form.save() 
-                return redirect('create_vocabulary', user_id = user_id, table_id = table_id, title = title)
+                form = form.save(commit = False)
+                form.table_id = table_id
+                form.save()
+
+                print('-----------------create----------', form)
+                return redirect('create_vocabulary', table_id = table_id, title = title)
              
 
     def put(self, request):
@@ -96,27 +94,30 @@ class WordListView(ListView):
 
     #it receive the query
     queryset = Word.objects.all()
-    print('--------word list--------', queryset)
 
     def get(self, request, *args, **kwargs) :
-        user_id = kwargs['user_id']
         table_id = kwargs['table_id']
         title = kwargs['title']
-        # word_collection = Word.objects.filter(table_id = table_id)
+        word_collection = Word.objects.filter(table_id = table_id)
+        print('-----------------word list----------', table_id, word_collection)
 
-        print('---------------------word lis-----------------------', table_id)
         return render(request, self.template_name, {
-            'user_id': user_id,
-            'table_id':table_id,
+             'table_id':table_id,
             'title':title,
-            'word_collection': self.queryset
+            'word_collection': word_collection
         })
 
-def table_collection(request) : 
 
-    return render(request, 'table_collection/table_collection.html',{
-        "title" : "menú de las tablas"
-    })
+class TableCollectionView(ListView) :
+    template_name = 'table_collection/table_collection.html'
+    
+    def get(self, request, *args, **kwargs) : 
+        tables = Table.objects.filter(user_id = request.user.id)
+        return render(request, self.template_name,{
+            "title" : "menú de las tablas",
+            'tables': tables
+        })
+
 
 
 

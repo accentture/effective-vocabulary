@@ -8,7 +8,15 @@
         <form action="" method="POST">
             {% csrf_token %}
 
-            {{ register }}
+            {% for field in user_form %}
+                <label for="">{{field.label}}</label> 
+                {{field}}
+
+                {% if field.label == 'Last name' %}
+                    {{user_profile_form}}
+                {% endif %}
+            {% endfor %}
+
             <input type="submit" value="Iniciar sesión">
         </form>
     </div>
