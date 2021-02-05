@@ -1,0 +1,19 @@
+{% extends 'layouts/layout.html' %}
+
+{% block main_content %}
+    <h2>OTRAS TABLAS</h2>
+
+    {% include 'includes/description_other_tables.html' %}
+    
+    <ul class="list-other-tables">
+        {% for table in tables %}
+            <li>
+                <div><a href="{% url 'word_list' table_id=table.id  title=table.title %}">{{table.title|upper}}</a></div>
+                <div>{{table.user_id}}</div>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+
+

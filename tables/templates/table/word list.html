@@ -1,11 +1,22 @@
-{% extends 'table/menu.html' %}
+{% extends 'table/main menu.html' %}
 
 {% block content_table %}
     <div class="table-container">
-        {% include 'includes/description.html' %}
+
+        <!-- a token will be added to protect the url -->
+        
+        <form action="GET">
+            {% csrf_token %}
+            <input type="text" name="kword" placeholder="Buscar palabra en inglés">
+
+            <button type="submit" >Buscar</button>
+        </form>
+
+
+        {% include 'includes/description_table.html' %}
         
         <!-- after to use ListView, to iterate the elements use object_list -->
-        {{object_list}}
+        <!-- {{object_list}} -->
 
         {% if word_collection|length > 0 %}
             {% for word in word_collection %}

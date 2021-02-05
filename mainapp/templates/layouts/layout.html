@@ -20,14 +20,18 @@
                     <li><a href="{% url 'user' %}">Usuario</a></li>
                     <li><a href="{% url 'title' %}">Nueva Tabla</a></li>
                     <li><a href="{% url 'table_collection' %}">Mis tablas</a></li>
+                    <li><a href="{% url 'other_tables' %}">Otras tablas</a></li>
+                    <li><a href="{% url 'logout' %}">Cerrar sesion</a></li>
                 </ul>
             </div>
         
             <div class="container-tables">
                     
-                {% block main_content %}
+                <div class="subcontainer-tables">
+                    {% block main_content %}
 
-                {% endblock %}
+                    {% endblock %}
+                </div>
                 
             </div>
         </div>

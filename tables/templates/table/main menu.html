@@ -1,0 +1,15 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+
+{% block main_content %}
+    
+    <h2>{{title}}</h2>    
+
+    {% include 'includes/menu vocabulary.html' %}
+
+    {% block content_table %}
+
+    {% endblock %}
+    
+    <script src="{% static 'js/content.js' %}"></script>
+{% endblock %}

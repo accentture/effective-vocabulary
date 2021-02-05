@@ -33,7 +33,8 @@ class TitleTable(TemplateView) :
             return redirect('menu', table_id = table.id, title = table.title)
 
 class MenuView(TemplateView) :
-    template_name = 'table/menu.html'
+    template_name = 'table/main menu.html'
+    
     def get(self, request, *args, **kwargs) : 
         table_id = kwargs['table_id']
         title = kwargs['title']
@@ -92,36 +93,41 @@ class WordListView(ListView):
     #setting name of param to send to context
     context_object_name = 'word_collection'
 
-    #it receive the query
-    queryset = Word.objects.all()
+    def get_queryset(self, *args, **kwargs) :
+        table_id = self.kwargs['table_id']
+        kword = self.request.GET.get('kword',)
 
-    def get(self, request, *args, **kwargs) :
-        table_id = kwargs['table_id']
-        title = kwargs['title']
-        word_collection = Word.objects.filter(table_id = table_id)
-        print('-----------------word list----------', table_id, word_collection)
+        if kword:
+            return Word.objects.filter(table_id = table_id, english_word = kword)
 
-        return render(request, self.template_name, {
-             'table_id':table_id,
-            'title':title,
-            'word_collection': word_collection
-        })
+        return Word.objects.filter(table_id = table_id)
+    
+    #overwriting context
+    def get_context_data(self, **kwargs):
+        table_id = self.kwargs['table_id']
+        title = self.kwargs['title']
+
+        context = super(WordListView, self).get_context_data(**kwargs)
+        context['table_id'] = table_id
+        context['title'] = title
+
+        return context
 
 
 class TableCollectionView(ListView) :
     template_name = 'table_collection/table_collection.html'
-    
-    def get(self, request, *args, **kwargs) : 
-        tables = Table.objects.filter(user_id = request.user.id)
-        return render(request, self.template_name,{
-            "title" : "menú de las tablas",
-            'tables': tables
-        })
+    context_object_name = 'tables'
+
+    def get_queryset(self, *args, **kwargs) : 
+        return Table.objects.filter(user_id = self.request.user.id)
 
 
+class OtherTables(ListView) :
+    template_name = 'table_collection/table_collection_other_users.html'
+    context_object_name = 'tables'
 
-
-
+    def get_queryset(self, *args, **kwargs):
+        return Table.objects.exclude(user_id = self.request.user.id)
 
 
 

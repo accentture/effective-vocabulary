@@ -1,29 +1,25 @@
 /* ================================================== menu of table */
-/* general styles */
 
-ul.menu-table {
+ul.menu-vocabulary {
   display: flex;
   justify-content: space-between;
 }
-ul.menu-table li,
-ul.table-collection li {
+ul.menu-vocabulary li {
   min-width: 150px;
   height: 40px;
   line-height: 40px;
-  text-align: center;
-  background-color: blue;
+  background-color: red;
   border-radius: 5px;
   list-style: none;
 }
-ul.table-collection li {
-  margin-bottom: 10px;
-}
-ul.menu-table li a,
-ul.table-collection li a {
+ul.menu-vocabulary li a {
   color: white;
   text-decoration: none;
 }
-/* ========================================== content of table */
+/* ================================================== create vocabulary */
+.table-container ul li {
+  list-style: none;
+}
 .table-container {
   width: 99%;
   min-height: 80px;
@@ -40,12 +36,6 @@ ul.table-collection li a {
 .table-container ul.description {
   width: 55%;
 }
-
-.table-container ul li {
-  list-style: none;
-}
-
-/* styles forms */
 form.form-of-words {
   display: flex;
   justify-content: flex-start;
@@ -59,7 +49,6 @@ form.form-of-words p:first-child {
 }
 
 /* textarea ckeditor */
-
 form.form-of-words p input[type="text"] {
   width: 150px;
 }
@@ -74,8 +63,7 @@ form.form-of-words p input[type="text"] {
   background-color: green;
   color: white;
 }
-
-/* ============================================ word list */
+/* ================================================== word list */
 ul.word_list {
   border: 2px solid blue;
 }
@@ -88,4 +76,51 @@ ul.word_list li:last-child {
   width: 630px;
   text-align: left;
   border: 2px solid red;
+}
+/* ================================================== table collection */
+
+ul.table-collection li {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background-color: red;
+  border-radius: 5px;
+  list-style: none;
+}
+ul.table-collection li {
+  margin-bottom: 10px;
+}
+ul.table-collection li a {
+  color: white;
+  text-decoration: none;
+}
+
+/* ========================================== table collection other users */
+ul.other-tables-description {
+  display: flex;
+  justify-content: space-around;
+  background-color: blue;
+  color: white;
+}
+ul.other-tables-description li {
+  list-style: none;
+}
+
+ul.list-other-tables li {
+  height: 30px;
+  line-height: 30px;
+  margin-top: 5px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: space-around;
+  background-color: green;
+  border-radius: 5px;
+  color: white;
+}
+ul.list-other-tables li div {
+  text-align: center;
+}
+ul.list-other-tables li div a {
+  color: white;
+  text-decoration: none;
 }
