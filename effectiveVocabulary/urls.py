@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
+#to upload pdf file
 from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,7 +27,8 @@ urlpatterns = [
     path('', include('tables.urls')),
     path('', include('learnWithDocumentation.urls')),
 
-] 
+  #to upload pdf files
+] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
 if settings.DEBUG : 
     from django.conf.urls.static import static

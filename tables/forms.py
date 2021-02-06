@@ -5,7 +5,19 @@ from django import forms
 from django.core import validators
 
 from django.forms import ModelForm
-from .models import Word
+from .models import Word, Table
+
+class TableForm(ModelForm):
+    class Meta:
+        model = Table
+        fields = ['title', 'link', 'pdf_doc']
+
+        labels = {
+            'title' : 'Título de tabla',
+            'link' : 'Link del sitio web para el que creas la tabla(opcional)',
+            'pdf_doc' : 'Documento para el que creas la tabla(opcional)',
+        }
+
 
 class WordForm(ModelForm):
     class Meta:
@@ -20,6 +32,7 @@ class WordForm(ModelForm):
         }
 
         
+
         
 
 

@@ -145,3 +145,11 @@ CKEDITOR_CONFIGS = {
         'width': 580,
    }, 
 }
+
+# to upload pdf file 
+STATIC_ROOT = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
+
+
+
+

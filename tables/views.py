@@ -8,29 +8,35 @@ from tables.models import Word, Table
 from user.models import User
 
 #form
-from tables.forms import WordForm
+from tables.forms import WordForm, TableForm
+
+#to upload pdf file
+from django.core.files.storage import FileSystemStorage
 
 
 class TitleTable(TemplateView) : 
     template_name = 'table/title.html'
 
     def get(self, request, *args, **kwargs) :
-        return render(request, self.template_name)
+        table_form = TableForm()  
+
+        context = {
+            'form': table_form
+        }
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs): 
 
         if request.method == 'POST' :
-            title = request.POST['title']
+            print('---------------files--------------', request.FILES)
+            table_form = TableForm(request.POST, request.FILES)  
+            
+            if table_form.is_valid():
+                table_form = table_form.save(commit = False)
+                table_form.user_id = request.user.id
+                table_form.save()
 
-            if len(title) > 0 :
-                table = Table(
-                    user_id = request.user.id,
-                    title = title
-                )
-                table.save()
-
-
-            return redirect('menu', table_id = table.id, title = table.title)
+            return redirect('menu', table_id = table_form.id, title = table_form.title)
 
 class MenuView(TemplateView) :
     template_name = 'table/main menu.html'
@@ -131,7 +137,24 @@ class OtherTables(ListView) :
 
 
 
+def uploadfile_view(request):
+    # https://docs.djangoproject.com/en/3.1/topics/http/file-uploads/
+    if request.method == 'POST':
+        f = request.FILES['file']
+        fs = FileSystemStorage()
+        filename, ext = str(f).split('.')
+        file = fs.save(str(f), f)
+        fileurl = fs.url(file)
+        size = fs.size(file)
 
+        return render(request, 'demo_upload_files.html', {
+            'fileUrl':fileurl,
+            'fileName':filename,
+            'ext':ext,
+            'size':size
+        })
+    else :
+        return render(request, 'demo_upload_files.html',{})
 
 
 

@@ -1,3 +1,29 @@
+/* ================================================== form title */
+.form-title {
+  width: 700px;
+}
+.form-title p {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.form-title p label {
+  text-align: right;
+}
+.form-title p input {
+  width: 300px;
+  height: 27px;
+}
+.form-title input[type="submit"] {
+  width: 303px;
+  height: 35px;
+  background-color: green;
+  color: white;
+  float: right;
+  cursor: pointer;
+}
 /* ================================================== menu of table */
 
 ul.menu-vocabulary {
@@ -5,18 +31,23 @@ ul.menu-vocabulary {
   justify-content: space-between;
 }
 ul.menu-vocabulary li {
-  min-width: 150px;
+  min-width: 200px;
   height: 40px;
   line-height: 40px;
   background-color: red;
   border-radius: 5px;
   list-style: none;
+  text-align: center;
 }
 ul.menu-vocabulary li a {
+  display: block;
   color: white;
   text-decoration: none;
 }
 /* ================================================== create vocabulary */
+.table-container {
+  padding: 10px;
+}
 .table-container ul li {
   list-style: none;
 }
@@ -64,6 +95,18 @@ form.form-of-words p input[type="text"] {
   color: white;
 }
 /* ================================================== word list */
+.form-search input.search-field {
+  width: 600px;
+  padding: 7px;
+}
+.form-search button.search-button {
+  width: 80px;
+  padding: 7px;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+
 ul.word_list {
   border: 2px solid blue;
 }

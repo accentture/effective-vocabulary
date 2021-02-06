@@ -5,11 +5,11 @@
 
         <!-- a token will be added to protect the url -->
         
-        <form action="GET">
+        <form action="GET" class="form-search">
             {% csrf_token %}
-            <input type="text" name="kword" placeholder="Buscar palabra en inglés">
+            <input type="text" name="kword" placeholder="Buscar palabra en inglés" class="search-field">
 
-            <button type="submit" >Buscar</button>
+            <button type="submit" class="search-button">Buscar</button>
         </form>
 
 

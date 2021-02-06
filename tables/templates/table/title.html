@@ -3,22 +3,15 @@
 {% block main_content %}
     
     <!-- <form action="{ url 'table' }{{box}}/{{user_id}}" method="POST"> : other way to pass params -->
-    <p>{{user.email}}</p>
-    <form action="" method="POST">
+    <form action="" method="POST" class="form-title">
 
         <!-- when csrf_token is used, a token is sended by the url -->
         {% csrf_token %}
         
-        <label for="title">Título de la tabla</label>
-        <input type="text" name="title">
-
-        <label for="">Link</label>
-        <input type="text">
-
-        <label for="pdf_doc">Añadir documento(opcional)</label>
-        <input type="file" name="pdf_doc">
+        {{form.as_p}}
 
         <input type="submit" value="Enviar">
     </form>    
-    
+
+
 {% endblock %}

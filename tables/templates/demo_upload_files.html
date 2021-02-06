@@ -1,0 +1,13 @@
+{% extends 'layouts/layout.html' %}
+ 
+{% block main_content %}
+    <h2>DEMO TO UPLOAD FILES</h2>
+
+    <form action="{% url 'upload' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="file" id="file">
+        <button type="submit">Subir</button>
+    </form>
+
+    <a href="{{fileUrl}}">{{fileName}}</a>
+{% endblock %}

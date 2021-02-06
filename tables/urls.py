@@ -10,4 +10,6 @@ urlpatterns = [
     path('lista-de-palabras/<int:table_id>/<str:title>', views.WordListView.as_view(), name = 'word_list'),
     path('coleccion-tablas/', views.TableCollectionView.as_view(), name = 'table_collection'),
     path('otras-tablas/', views.OtherTables.as_view(), name = 'other_tables'),
-]
+    path('subir/', views.uploadfile_view, name = 'upload'),
+
+] 
