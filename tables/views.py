@@ -1,4 +1,9 @@
+# ============================================== documentation recomended:  http://ccbv.co.uk/
+
 from django.shortcuts import render, redirect
+
+#http response
+from django.http import HttpResponse, Http404
 
 # importing View
 from django.views.generic import View, TemplateView, ListView 
@@ -13,6 +18,11 @@ from tables.forms import WordForm, TableForm
 #to upload pdf file
 from django.core.files.storage import FileSystemStorage
 
+# to dowload pdf
+from django.http import FileResponse
+
+
+import os
 
 class TitleTable(TemplateView) : 
     template_name = 'table/title.html'
@@ -28,26 +38,33 @@ class TitleTable(TemplateView) :
     def post(self, request, *args, **kwargs): 
 
         if request.method == 'POST' :
-            print('---------------files--------------', request.FILES)
-            table_form = TableForm(request.POST, request.FILES)  
+            table_form = TableForm(request.POST, request.FILES)
             
             if table_form.is_valid():
-                table_form = table_form.save(commit = False)
-                table_form.user_id = request.user.id
-                table_form.save()
+                table = table_form.save(commit = False)
+                table.user_id = request.user.id
+                table.save()
 
-            return redirect('menu', table_id = table_form.id, title = table_form.title)
+            return redirect('menu', table_id = table.id, title = table.title)
 
 class MenuView(TemplateView) :
     template_name = 'table/main menu.html'
-    
+
+    def obtainAssetsTable(self, table_id):
+        assets = Table.objects.filter(id = table_id)
+        print('------------assets--------------', assets[0].pdf_doc)
+        return assets
+
     def get(self, request, *args, **kwargs) : 
         table_id = kwargs['table_id']
         title = kwargs['title']
+        data_table = self.obtainAssetsTable(table_id)
 
         return render(request, self.template_name, {
             'table_id': table_id,
-            'title': title
+            'title': title,
+            'pdf_doc':data_table[0].pdf_doc,
+            'link':data_table[0].link
         })
 
 class CreateVocabularyWiew(View):
@@ -89,7 +106,6 @@ class CreateVocabularyWiew(View):
 
 
 #to use here ListView
-
 class WordListView(ListView):
     #to specify name of model to get
     model = Word
@@ -129,11 +145,58 @@ class TableCollectionView(ListView) :
 
 
 class OtherTables(ListView) :
+    model = Table
     template_name = 'table_collection/table_collection_other_users.html'
+
+    # to paginate queries of database
+    paginate_by = 5
     context_object_name = 'tables'
 
     def get_queryset(self, *args, **kwargs):
         return Table.objects.exclude(user_id = self.request.user.id)
+
+
+class AssetsTable(View):
+    template_name = 'table/assets table.html'     
+
+    def get(self, request, *args, **kwargs):
+        table_id = kwargs['table_id']
+        asset = kwargs['asset']
+        datatable = Table.objects.filter(id = table_id)
+
+        pdfname = str(datatable[0].pdf_doc).split('/')
+        pdfpath = datatable[0].pdf_doc.path
+
+        context = {
+            'title':datatable[0].title,
+            'table_id':datatable[0].id,
+            'pdf_doc_name':pdfname[1],
+            'link':datatable[0].link,
+            'asset':asset,
+            'pdfpath':pdfpath
+        }
+        return render(request, self.template_name, context)
+
+    
+def download_pdf(request, pdfpath) :
+    if os.path.exists(pdfpath):
+        with open(pdfpath, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="application/pdf")
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(pdfpath)
+            return response
+    raise Http404
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -157,34 +220,3 @@ def uploadfile_view(request):
         return render(request, 'demo_upload_files.html',{})
 
 
-
-
-
-
-
-
-
-
-def main(request, box = '', user_id = -1 ) :
-    word_form = WordForm
-    
-    if request.method == 'POST' : 
-        word_form = WordForm(request.POST)
-        
-        if word_form.is_valid():
-            data_word = word_form.cleaned_data
-
-            new_word = Word(
-                user_id = user_id,
-                english_word = data_word['english_word'],
-                spanish_word = data_word['spanish_word'],
-                inverosimil_relation = data_word['inverosimil_relation']
-            )
-            new_word.save()
-
-    return render(request, 'main.html', {
-        'box':box,
-        'word_form': word_form,
-        'box': box,
-        'user_id' : user_id
-    })

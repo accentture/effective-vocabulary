@@ -134,7 +134,7 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 
-MEDI_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # ckeditor configs
@@ -148,7 +148,7 @@ CKEDITOR_CONFIGS = {
 
 # to upload pdf file 
 STATIC_ROOT = '/static/'
-MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
+
 
 
 

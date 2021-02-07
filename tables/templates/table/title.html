@@ -3,7 +3,7 @@
 {% block main_content %}
     
     <!-- <form action="{ url 'table' }{{box}}/{{user_id}}" method="POST"> : other way to pass params -->
-    <form action="" method="POST" class="form-title">
+    <form action="" method="POST" class="form-title" enctype="multipart/form-data">
 
         <!-- when csrf_token is used, a token is sended by the url -->
         {% csrf_token %}

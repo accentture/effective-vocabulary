@@ -1,0 +1,11 @@
+{% extends 'table/main menu.html' %}
+
+{% block content_table %}
+
+    {% if asset == 'pdf_doc' %}
+        <P>ENLACE: <a href="{% url 'download' pdfpath=pdfpath %}"> {{pdf_doc_name}}</a></P>
+    {% else %}
+        <P>ENLACE: <a href="{{link}}">sitio web</a></P>
+    {% endif %}
+
+{% endblock %}

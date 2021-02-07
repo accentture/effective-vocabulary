@@ -17,6 +17,18 @@ class TableForm(ModelForm):
             'link' : 'Link del sitio web para el que creas la tabla(opcional)',
             'pdf_doc' : 'Documento para el que creas la tabla(opcional)',
         }
+        widgets = {
+            'pdf_doc' : forms.FileInput(
+                attrs = {
+                    'class':'pdf_doc'
+                }
+            )
+        }
+
+    # to remove required in link field
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['link'].required = False
 
 
 class WordForm(ModelForm):

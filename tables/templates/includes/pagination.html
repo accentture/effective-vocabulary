@@ -1,0 +1,34 @@
+<div class="pagination">
+
+    <!-- checking if doesn't exist previous page -->
+    {% if page_obj.has_previous %}
+    
+    <!-- setting links -->
+    <a href="?page=1">
+       <!-- it create a arrow -->  &laquo; Primero 
+        </a>
+        
+        <a href="?page={{ page_obj.previous_page_number }}">
+            Anterior
+        </a>
+    {% endif %}
+    
+    <span class="current_page">
+        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+    </span>
+    
+    <!-- checking if doesn't exist next page -->
+    {% if page_obj.has_next %}
+
+        <!-- setting links -->
+        <a href="?page={{ page_obj.next_page_number }}">
+            Siguiente
+        </a>
+
+        <a href="?page={{ page_obj.paginator.num_pages }}">
+             Ultimo &raquo; <!-- it create a arrow --> 
+        </a>
+
+        
+    {% endif %}
+</div>
