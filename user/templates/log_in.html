@@ -4,8 +4,10 @@
 {% block main_content %}
     <link rel="stylesheet" href="{% static 'css/styles_user.css'%}">
 
-    <div class="form-container">
-        <form action="{% url 'log_in' %}" method="POST">
+
+    
+    <div class="mask">
+        <form class="form form-login" action="{% url 'log_in' %}" method="POST">
 
             {% csrf_token %}
 
@@ -22,10 +24,11 @@
             <input type="submit" value="Iniciar sesión">
         </form>
 
-        <div class="button">
+        <div class="button-register">
             <button><a href="{% url 'register' %}">Crear cuenta nueva</a></button>
         </div>
     </div>
+
     
     
 {% endblock %}

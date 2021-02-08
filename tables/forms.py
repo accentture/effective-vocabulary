@@ -15,7 +15,7 @@ class TableForm(ModelForm):
         labels = {
             'title' : 'Título de tabla',
             'link' : 'Link del sitio web para el que creas la tabla(opcional)',
-            'pdf_doc' : 'Documento para el que creas la tabla(opcional)',
+            'pdf_doc' : 'Archivo PDF para el que creas la tabla(opcional)',
         }
         widgets = {
             'pdf_doc' : forms.FileInput(

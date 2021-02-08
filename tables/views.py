@@ -21,7 +21,6 @@ from django.core.files.storage import FileSystemStorage
 # to dowload pdf
 from django.http import FileResponse
 
-
 import os
 
 class TitleTable(TemplateView) : 
@@ -149,7 +148,7 @@ class OtherTables(ListView) :
     template_name = 'table_collection/table_collection_other_users.html'
 
     # to paginate queries of database
-    paginate_by = 5
+    paginate_by = 10
     context_object_name = 'tables'
 
     def get_queryset(self, *args, **kwargs):
@@ -164,14 +163,21 @@ class AssetsTable(View):
         asset = kwargs['asset']
         datatable = Table.objects.filter(id = table_id)
 
+
         pdfname = str(datatable[0].pdf_doc).split('/')
-        pdfpath = datatable[0].pdf_doc.path
+        pdfpath = ''
+        print('------------pdf---------------', datatable[0].link)
+        
+        if pdfname[0] != 'null':
+            pdfpath = datatable[0].pdf_doc.path
+        else:
+            pdfpath = 'null'
 
         context = {
             'title':datatable[0].title,
             'table_id':datatable[0].id,
-            'pdf_doc_name':pdfname[1],
-            'link':datatable[0].link,
+            'pdf_doc_name':pdfname,
+            'link':datatable[0].link ,
             'asset':asset,
             'pdfpath':pdfpath
         }

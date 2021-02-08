@@ -7,34 +7,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles_user.css'%}">
     <link rel="stylesheet" href="{% static 'css/styles-app-tables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 </head>
 <body>
     <header>
         <h1>VOCABULARIO EFECTIVO</h1>
+        {% if user.email %}
+            <div class="user-control">
+                <img src="{% static 'img/user2.png' %}" alt="">
 
-        <div class="main-container">
-            <div class="container-menu">
                 <ul>
-                    <li><a href="{% url 'log_in' %}">Iniciar Sesión</a></li>
-                    <li><a href="{% url 'user' %}">Usuario</a></li>
+                    <li class="logout"><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                </ul>
+        
+            </div>
+        {% endif %}
+    </header>
+
+    <section class="main-container">
+        <nav class="container-menu">
+            <ul>
+                {% if user.email %}           
+                    <!-- <li><a href="{% url 'user' %}">Usuario</a></li> -->
                     <li><a href="{% url 'title' %}">Nueva Tabla</a></li>
                     <li><a href="{% url 'table_collection' %}">Mis tablas</a></li>
                     <li><a href="{% url 'other_tables' %}">Otras tablas</a></li>
-                    <li><a href="{% url 'logout' %}">Cerrar sesion</a></li>
-                </ul>
-            </div>
-        
-            <div class="container-tables">
-                    
-                <div class="subcontainer-tables">
-                    {% block main_content %}
+                {% else %}
+                    <li><a href="{% url 'register' %}">Registrarse</a></li>
+                    <li><a href="{% url 'log_in' %}">Iniciar Sesión</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    
+        <div class="container-tables">
+            <div class="subcontainer-tables">
+                {% block main_content %}
 
-                    {% endblock %}
-                </div>
-                
+                {% endblock %}
             </div>
+            
         </div>
-    </header>
+    </section>
 </body>
 </html>

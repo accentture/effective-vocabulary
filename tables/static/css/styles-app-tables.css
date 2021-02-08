@@ -1,4 +1,9 @@
 /* ================================================== form title */
+.title-table {
+  height: 60px;
+  line-height: 60px;
+  margin-bottom: 20px;
+}
 .form-title {
   width: 700px;
 }
@@ -22,22 +27,34 @@
   background-color: green;
   color: white;
   float: right;
+  font-size: 16px;
   cursor: pointer;
+}
+.form-title input[type="submit"]:hover {
+  background-color: rgb(20, 160, 20);
 }
 /* ================================================== menu of table */
 
 ul.menu-vocabulary {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  margin-bottom: 10px;
 }
 ul.menu-vocabulary li {
-  min-width: 200px;
+  min-width: 100%;
   height: 40px;
   line-height: 40px;
-  background-color: red;
+  background-color: rgb(226, 9, 9);
   border-radius: 5px;
   list-style: none;
   text-align: center;
+}
+ul.menu-vocabulary li:hover {
+  background-color: rgb(207, 52, 52);
+}
+ul.menu-vocabulary li:active {
+  background-color: #17157c;
 }
 ul.menu-vocabulary li a {
   display: block;
@@ -54,34 +71,32 @@ ul.menu-vocabulary li a {
 .table-container {
   width: 99%;
   min-height: 80px;
-  border: 2px solid brown;
+  background-color: #1a1818;
 }
 /* field description of table */
 .table-container ul {
-  display: flex;
+  display: grid;
   height: 30px;
   line-height: 30px;
-  display: flex;
-  justify-content: space-evenly;
+  grid-template-columns: 1fr 1fr 4fr;
+  grid-gap: 10px;
 }
 .table-container ul.description {
-  width: 55%;
+  width: 100%;
 }
 form.form-of-words {
-  display: flex;
-  justify-content: flex-start;
-}
-form.form-of-words p {
-  margin-left: 15px;
-  margin-right: 15px;
-}
-form.form-of-words p:first-child {
-  margin-left: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 0fr 3fr 0fr 1fr;
+  grid-gap: 10px;
 }
 
 /* textarea ckeditor */
+div#cke_id_inverosimil_relation {
+  width: auto;
+}
 form.form-of-words p input[type="text"] {
-  width: 150px;
+  width: 100%;
+  height: 24px;
 }
 .button {
   width: 100px;
@@ -93,14 +108,20 @@ form.form-of-words p input[type="text"] {
   height: 100%;
   background-color: green;
   color: white;
+  cursor: pointer;
+}
+.button input[type="submit"]:hover {
+  background-color: rgb(20, 160, 20);
 }
 /* ================================================== word list */
+.form-search {
+  display: grid;
+  grid-template-columns: 8fr 1fr 1fr;
+}
 .form-search input.search-field {
-  width: 600px;
   padding: 7px;
 }
 .form-search button.search-button {
-  width: 80px;
   padding: 7px;
   background-color: green;
   color: white;
@@ -108,25 +129,24 @@ form.form-of-words p input[type="text"] {
 }
 
 ul.word_list {
-  border: 2px solid blue;
+  display: grid;
+  grid-template-columns: 1fr 1fr 4fr;
 }
 ul.word_list li {
-  width: 80px;
-  border: 2px solid purple;
-  text-align: center;
-}
-ul.word_list li:last-child {
-  width: 630px;
   text-align: left;
-  border: 2px solid red;
 }
+ul.word_list li strong {
+  color: #6666e4;
+  font-size: 18px;
+}
+
 /* ================================================== table collection */
 
 ul.table-collection li {
   height: 40px;
   line-height: 40px;
   text-align: center;
-  background-color: red;
+  background-color: rgb(226, 9, 9);
   border-radius: 5px;
   list-style: none;
 }
@@ -142,7 +162,7 @@ ul.table-collection li a {
 ul.other-tables-description {
   display: flex;
   justify-content: space-around;
-  background-color: blue;
+  background-color: #141447;
   color: white;
 }
 ul.other-tables-description li {
@@ -156,9 +176,12 @@ ul.list-other-tables li {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   justify-content: space-around;
-  background-color: green;
+  background-color: #034e21;
   border-radius: 5px;
   color: white;
+}
+ul.list-other-tables li:hover {
+  background-color: #04682c;
 }
 ul.list-other-tables li div {
   text-align: center;
@@ -166,4 +189,76 @@ ul.list-other-tables li div {
 ul.list-other-tables li div a {
   color: white;
   text-decoration: none;
+  display: block;
+  cursor: pinter;
+}
+/* pagination */
+.pagination {
+  text-align: center;
+  margin-top: 18px;
+}
+.pagination a {
+  color: rgb(7, 185, 185);
+  margin-right: 15px;
+}
+/* ========================================== table collection other users */
+.assets p a {
+  color: rgb(7, 185, 185);
+}
+/* responsive */
+
+@media (max-width: 979px) {
+  ul.menu-vocabulary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .table-container ul li {
+    height: auto;
+  }
+}
+@media (max-width: 972px) {
+  .table-container ul.description {
+    margin-bottom: 30px;
+  }
+}
+@media (max-width: 962px) {
+  .form-title {
+    margin: 0 auto;
+    display: grid;
+  }
+  .form-title p {
+    width: 70%;
+    justify-content: normal;
+    display: grid;
+    margin: 0 auto;
+  }
+  .form-title p label {
+    width: 100%;
+    text-align: left;
+  }
+  .form-title p input {
+    width: 100%;
+  }
+  .form-title {
+    width: 90%;
+  }
+  .form-title input[type="submit"] {
+    width: 71%;
+    float: none;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 616px) {
+  ul.list-other-tables li {
+    height: auto;
+  }
+}
+@media (max-width: 561px) {
+  ul.menu-vocabulary {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 506px) {
+  .main-container div.container-tables {
+    padding-bottom: 18px;
+  }
 }

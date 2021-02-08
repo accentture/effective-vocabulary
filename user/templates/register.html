@@ -2,23 +2,23 @@
 {% load static %}
 
 {% block main_content %}
-    <link rel="stylesheet" href="{% static 'css/styles_user.css'%}">
-
-    <div class="main-container">
-        <form action="" method="POST">
+    
+    <div class="mask">
+        <form class="form form-register" action="" method="POST" >
             {% csrf_token %}
-
+    
             {% for field in user_form %}
                 <label for="">{{field.label}}</label> 
                 {{field}}
-
+    
                 {% if field.label == 'Last name' %}
                     {{user_profile_form}}
                 {% endif %}
             {% endfor %}
-
+    
             <input type="submit" value="Iniciar sesión">
         </form>
     </div>
+
     
 {% endblock %}
