@@ -1,0 +1,7 @@
+<h2 class="action-table">Actualizar tabla</h2>
+<form action="" class="form-table form-update"  method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+    <input type="submit" value="Actualizar">
+</form>

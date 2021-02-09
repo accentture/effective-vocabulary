@@ -4,18 +4,22 @@
 
     <div class="assets">
         {% if asset == 'pdf_doc' %}
-            {% if pdfpath != 'null' %}
-                <P>ENLACE: <a href="{% url 'download' pdfpath=pdfpath %}"> {{pdf_doc_name}}</a></P>
+            {% if pdfpath != '' %}
+                <P>ENLACE: <a href="{% url 'tables_app:download' pdfpath=pdfpath %}">Descargar</a></P>
             {% else %}
                 <p>Esta tabla no tiene un documento PDF</p>
+
+                <button><a href="{% url 'tables_app:updateassets' pk=table_id %}">Actualizar</a></button>
+
             {% endif %}
 
 
         {% else %}
-            {% if link != 'null' %}
+            {% if link != None %}
                 <P>ENLACE: <a href="{{link}}">sitio web</a></P>
             {% else %}
                 <p>Esta tabla no tiene vínculo a un sitio web</p>
+                <button><a href="{% url 'tables_app:updateassets' pk=table_id %}">Actualizar</a></button>
             {% endif %}
             
         {% endif %}

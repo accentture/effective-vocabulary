@@ -7,7 +7,7 @@
 
     
     <div class="mask">
-        <form class="form form-login" action="{% url 'log_in' %}" method="POST">
+        <form class="form form-login" action="{% url 'user_app:log_in' %}" method="POST">
 
             {% csrf_token %}
 
@@ -25,7 +25,7 @@
         </form>
 
         <div class="button-register">
-            <button><a href="{% url 'register' %}">Crear cuenta nueva</a></button>
+            <button><a href="{% url 'user_app:register' %}">Crear cuenta nueva</a></button>
         </div>
     </div>
 

@@ -1,0 +1,12 @@
+<!-- <form action="{ url 'table' }{{box}}/{{user_id}}" method="POST"> : other way to pass params -->
+    <h2 class="action-table">Crear nueva tabla</h2>
+    <!-- after to user method POST to save data, always the server will return an error -->
+    <form action="" method="POST" class="form-table form-table form-title" enctype="multipart/form-data">
+
+        <!-- when csrf_token is used, a token is sended by the url -->
+        {% csrf_token %}
+        
+        {{form.as_p}}
+
+        <input type="submit" value="Guardar">
+    </form>  

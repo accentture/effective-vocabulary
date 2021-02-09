@@ -31,7 +31,7 @@ def register(request) :
             user_profile_form.user = user
             user_profile_form.save()
 
-            return redirect('user')
+            return redirect('user_app:user')
 
     return render(request, 'register.html', {
         'user_form': user_form, 
@@ -57,12 +57,12 @@ class LoginView(View):
             if user :
                 messages.success(request, 'Bienvenido')
                 login(request, user)
-                return redirect('title')
+                return redirect('tables_app:title', action_table = 'set_table')
 
 
 def user_logout(request):
     logout(request)
-    return redirect('user')
+    return redirect('user_app:user')
 
 
 def user(request) :

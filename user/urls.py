@@ -16,6 +16,8 @@ from django.contrib.auth.decorators import login_required
 
 from . import views
 
+app_name = 'user_app'
+
 urlpatterns = [
     path('', views.LoginView.as_view(), name = 'log_in'),
     #path() allows to send aditional args to views asociated in the specify path

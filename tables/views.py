@@ -5,8 +5,8 @@ from django.shortcuts import render, redirect
 #http response
 from django.http import HttpResponse, Http404
 
-# importing View
-from django.views.generic import View, TemplateView, ListView 
+# importing generic Views
+from django.views.generic import View, TemplateView, ListView, CreateView, UpdateView 
 
 # models
 from tables.models import Word, Table
@@ -21,9 +21,14 @@ from django.core.files.storage import FileSystemStorage
 # to dowload pdf
 from django.http import FileResponse
 
-import os
+#to redirect with CreateView
+from django.urls import reverse, reverse_lazy
 
-class TitleTable(TemplateView) : 
+import os
+# ************************************************* it doesn´t serve now 
+
+
+class xxxTitleTable(TemplateView) : 
     template_name = 'table/title.html'
 
     def get(self, request, *args, **kwargs) :
@@ -44,14 +49,46 @@ class TitleTable(TemplateView) :
                 table.user_id = request.user.id
                 table.save()
 
-            return redirect('menu', table_id = table.id, title = table.title)
+            return redirect('app_name:menu', table_id = table.id, title = table.title)
 
-class MenuView(TemplateView) :
+class CreateTitleTable(CreateView):
+    template_name = 'table/title.html'
+    model = Table
+    form_class = TableForm
+
+    #if I want to pass all fields
+    #fields = ('__all__')
+
+    # to redirectionate after to save all data
+    #success_url = '.' # . : redirect to the same path
+    #success_url = reverse_lazy('tables_app:other_tables') #import to evit spaces in the param
+    def get_success_url(self):
+        return reverse_lazy('tables_app:menu', kwargs = {
+            'table_id': self.object.id,
+            'title':self.object.title
+        })
+
+    # CONCLUSION: never to make two saved in a single code
+    # it is used when values entered were correct, it is done checking params established in models
+    def form_valid(self, form): # form contain all data entered in the form
+        form.instance.user = self.request.user
+
+        # super : it is used to override method provided by django
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateTitleTable, self).get_context_data(**kwargs)
+        context['action_table'] = self.kwargs['action_table']
+
+        return context
+     
+
+
+class AccessMenuTable(TemplateView) :
     template_name = 'table/main menu.html'
 
     def obtainAssetsTable(self, table_id):
         assets = Table.objects.filter(id = table_id)
-        print('------------assets--------------', assets[0].pdf_doc)
         return assets
 
     def get(self, request, *args, **kwargs) : 
@@ -66,14 +103,13 @@ class MenuView(TemplateView) :
             'link':data_table[0].link
         })
 
-class CreateVocabularyWiew(View):
+class xxxCreateVocabularyTable(View):
     #django know that method use : get, post, put, delete; it is thanks to dispacht() method
 
     def get(self, request, *args, **kwargs) : # **kwargs : keys of aditional arguments
         form = WordForm()
         table_id = kwargs['table_id']
         title = kwargs['title']    
-        print('-----------------create----------', form)   
 
         return render(request, 'table/create vocabulary.html', {
             'form': form,
@@ -89,19 +125,42 @@ class CreateVocabularyWiew(View):
             form = WordForm(request.POST)
 
             if form.is_valid() :
-                form = form.save(commit = False)
+                #form contain all data saved in database
+                                # commit = False : it evits make the first save to database
+                form = form.save(commit = False) #save : to save data in database
+
+                #accesing to an attribute of this model saved in database
                 form.table_id = table_id
                 form.save()
 
-                print('-----------------create----------', form)
-                return redirect('create_vocabulary', table_id = table_id, title = title)
+                return redirect('tables_app:create_vocabulary', table_id = table_id, title = title)
              
+class CreateVocabularyTable(CreateView):
+    template_name = 'table/create vocabulary.html'
+    model = Word
+    form_class = WordForm
 
-    def put(self, request):
+    def get_context_data(self, **kwargs):
+        context = super(CreateVocabularyTable, self).get_context_data(**kwargs)
+        context['table_id'] = self.kwargs['table_id']
+        context['title'] = self.kwargs['title']
+
+        return context
+
+    #post is executed after to form_valid
+    def _post(self, request): # request is used to get data sent by the form
+        print('------------------create vocabulary------------',request.POST)
         pass
 
-    def delete(self, request):
-        pass
+    def form_valid(self, form):
+        form.instance.table_id = self.kwargs['table_id']
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('tables_app:create_vocabulary', kwargs = {
+            'table_id': self.kwargs['table_id'],
+            'title': self.kwargs['title']
+        })
 
 
 #to use here ListView
@@ -125,12 +184,9 @@ class WordListView(ListView):
     
     #overwriting context
     def get_context_data(self, **kwargs):
-        table_id = self.kwargs['table_id']
-        title = self.kwargs['title']
-
         context = super(WordListView, self).get_context_data(**kwargs)
-        context['table_id'] = table_id
-        context['title'] = title
+        context['table_id'] = self.kwargs['table_id']
+        context['title'] = self.kwargs['title']
 
         return context
 
@@ -138,7 +194,7 @@ class WordListView(ListView):
 class TableCollectionView(ListView) :
     template_name = 'table_collection/table_collection.html'
     context_object_name = 'tables'
-
+    paginate_by = 10
     def get_queryset(self, *args, **kwargs) : 
         return Table.objects.filter(user_id = self.request.user.id)
 
@@ -158,32 +214,56 @@ class OtherTables(ListView) :
 class AssetsTable(View):
     template_name = 'table/assets table.html'     
 
+    def obtain_pdf_path(self, datatable):
+        pdfname = str(datatable[0].pdf_doc).split('/')
+        pdfpath = ''
+
+        if pdfname[0] != '':
+            pdfpath = datatable[0].pdf_doc.path
+
+        return pdfpath
+
     def get(self, request, *args, **kwargs):
         table_id = kwargs['table_id']
         asset = kwargs['asset']
         datatable = Table.objects.filter(id = table_id)
 
-
-        pdfname = str(datatable[0].pdf_doc).split('/')
-        pdfpath = ''
-        print('------------pdf---------------', datatable[0].link)
-        
-        if pdfname[0] != 'null':
-            pdfpath = datatable[0].pdf_doc.path
-        else:
-            pdfpath = 'null'
+        pdfpath = self.obtain_pdf_path(datatable)
+        print('-------------------link-------------------------', datatable[0].link )
 
         context = {
             'title':datatable[0].title,
             'table_id':datatable[0].id,
-            'pdf_doc_name':pdfname,
             'link':datatable[0].link ,
             'asset':asset,
             'pdfpath':pdfpath
         }
         return render(request, self.template_name, context)
 
+class UpdatePdfTable(UpdateView):
+    template_name = 'table/title.html'
+    model = Table
+    form_class = TableForm
+    #success_url = reverse_lazy('tables_app:assets')
+
+    def adsfasdfget_context_data(self, **kwargs):
+        context = super(UpdatePdfTable, self).get_context_data(**kwargs)
+        print('----------------update context--------------', self.object)
+
+        context['table_id'] = self.kwargs['table_id']
+        context['title'] = self.kwargs['title']
+
+        return context
+
+    #if an error 403 is through, it is an segurity error
+    def get_success_url(self):
+        project = self.object
+        print('----------------update--------------', project.id)
+        return reverse_lazy('user_app:user')    
+
     
+
+
 def download_pdf(request, pdfpath) :
     if os.path.exists(pdfpath):
         with open(pdfpath, 'rb') as fh:
@@ -191,17 +271,6 @@ def download_pdf(request, pdfpath) :
             response['Content-Disposition'] = 'inline; filename=' + os.path.basename(pdfpath)
             return response
     raise Http404
-
-
-
-
-
-
-
-
-
-
-
 
 
 

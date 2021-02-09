@@ -19,7 +19,7 @@
                 <img src="{% static 'img/user2.png' %}" alt="">
 
                 <ul>
-                    <li class="logout"><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                    <li class="logout"><a href="{% url 'user_app:logout' %}">Cerrar sesión</a></li>
                 </ul>
         
             </div>
@@ -30,13 +30,13 @@
         <nav class="container-menu">
             <ul>
                 {% if user.email %}           
-                    <!-- <li><a href="{% url 'user' %}">Usuario</a></li> -->
-                    <li><a href="{% url 'title' %}">Nueva Tabla</a></li>
-                    <li><a href="{% url 'table_collection' %}">Mis tablas</a></li>
-                    <li><a href="{% url 'other_tables' %}">Otras tablas</a></li>
+                    <!-- <li><a href="{% url 'user_app:user' %}">Usuario</a></li> -->
+                    <li><a href="{% url 'tables_app:title' action_table='set_table' %}">Nueva Tabla</a></li>
+                    <li><a href="{% url 'tables_app:table_collection' %}">Mis tablas</a></li>
+                    <li><a href="{% url 'tables_app:other_tables' %}">Otras tablas</a></li>
                 {% else %}
-                    <li><a href="{% url 'register' %}">Registrarse</a></li>
-                    <li><a href="{% url 'log_in' %}">Iniciar Sesión</a></li>
+                    <li><a href="{% url 'user_app:register' %}">Registrarse</a></li>
+                    <li><a href="{% url 'user_app:log_in' %}">Iniciar Sesión</a></li>
                 {% endif %}
             </ul>
         </nav>

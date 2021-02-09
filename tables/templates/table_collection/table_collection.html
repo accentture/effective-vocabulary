@@ -5,8 +5,10 @@
     <ul class="table-collection">
         
         {% for table in tables %}
-            <li><a href="{% url 'word_list' table_id=table.id  title=table.title %}">{{table.title|upper}}</a></li>
+            <li><a href="{% url 'tables_app:word_list' table_id=table.id  title=table.title %}">{{table.title|upper}}</a></li>
         {% endfor %}
 
     </ul>
+
+    {% include 'includes/pagination.html' %}
 {% endblock %}

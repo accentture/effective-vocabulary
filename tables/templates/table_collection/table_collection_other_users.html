@@ -8,7 +8,7 @@
     <ul class="list-other-tables">
         {% for table in tables %}
             <li>
-                <div><a href="{% url 'word_list' table_id=table.id  title=table.title %}">{{table.title|upper}}</a></div>
+                <div><a href="{% url 'tables_app:word_list' table_id=table.id  title=table.title %}">{{table.title|upper}}</a></div>
                 <div>{{table.user_id}}</div>
             </li>
         {% endfor %}
