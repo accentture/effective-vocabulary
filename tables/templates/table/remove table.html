@@ -1,0 +1,14 @@
+{% extends 'layouts/layout.html' %}
+
+{% block main_content %}
+    
+    <h2 class="action-table">Estás seguro de eliminar esta tabla</h2>
+    <h3 class="remove-warning">¿Estás seguro de eliminar esta tabla?</h3>
+    <form class="form-table" action="" method="POST">
+        {% csrf_token %}
+
+        <input type="submit" value="Confirmar">
+
+    </form>
+
+{% endblock %}

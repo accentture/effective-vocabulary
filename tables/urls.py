@@ -17,7 +17,8 @@ urlpatterns = [
     path('coleccion-tablas/', login_required(views.TableCollectionView.as_view()), name = 'table_collection'),
     path('otras-tablas/', login_required(views.OtherTables.as_view()), name = 'other_tables'),
     path('bienes/<int:table_id>/<str:asset>', login_required(views.AssetsTable.as_view()), name = 'assets'),
-    path('actualizar/<pk>/', login_required(views.UpdatePdfTable.as_view()), name = 'updateassets'),
+    path('actualizar/<pk>/', login_required(views.UpdateTable.as_view()), name = 'updatetable'),
+    path('elimninar-tabla/<pk>/', login_required(views.RemoveTable.as_view()), name = 'removetable'),
     path('descarga/<str:pdfpath>', login_required(views.download_pdf), name = 'download'),
     path('subir/', login_required(views.uploadfile_view), name = 'upload'),
 

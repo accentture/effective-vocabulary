@@ -1,11 +1,16 @@
 {% extends 'layouts/layout.html' %}
 
 {% block main_content %}
-    <h2>Tablas creadas</h2>
+    <h2 class="description-tables">Tablas creadas</h2>
     <ul class="table-collection">
         
         {% for table in tables %}
-            <li><a href="{% url 'tables_app:word_list' table_id=table.id  title=table.title %}">{{table.title|upper}}</a></li>
+            <li>
+                <div class="option-table check"><a href="{% url 'tables_app:word_list' table_id=table.id  title=table.title %}" >{{table.title|upper}}</a></div>
+                <div class="option-table update"><a href="{% url 'tables_app:updatetable' pk=table.id %}">Actualizar</a></div>
+                <div class="option-table delete"><a href="{% url 'tables_app:removetable' pk=table.id %}">Eliminar</a></div>
+            </li>
+
         {% endfor %}
 
     </ul>

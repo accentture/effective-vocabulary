@@ -1,17 +1,17 @@
 /* responsive */
 @media (max-width: 1068px) {
   .main-container {
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 1fr 84%;
   }
 }
 @media (max-width: 960px) {
   .main-container {
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr 80%;
   }
 }
 @media (max-width: 818px) {
   .main-container {
-    grid-template-columns: 1fr 2.5fr;
+    grid-template-columns: 1fr 80%;
   }
 }
 @media (max-width: 506px) {
@@ -19,7 +19,7 @@
     font-size: 5.5vw;
   }
   .main-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 100%;
   }
   .main-container nav.container-menu {
     height: 149px;

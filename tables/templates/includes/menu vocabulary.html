@@ -1,5 +1,9 @@
+
 <ul class="menu-vocabulary">
-    <li><a href="{% url 'tables_app:create_vocabulary' table_id=table_id  title=title %}">Crear vocabulario asociado</a></li>
+    {% if owner_table == user.id %}
+        <li><a href="{% url 'tables_app:create_vocabulary' table_id=table_id  title=title %}">Crear vocabulario asociado</a></li>
+    {% endif %}
+
     <li><a href="{% url 'tables_app:word_list' table_id=table_id  title=title %}">Ver vocabulario asociado</a></li>
     <li><a href="{% url 'tables_app:assets' table_id=table_id  asset='pdf_doc' %}">Documento PDF</a></li>
     <li><a href="{% url 'tables_app:assets' table_id=table_id  asset='link' %}">Link</a></li>

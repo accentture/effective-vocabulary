@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 
 # importing generic Views
-from django.views.generic import View, TemplateView, ListView, CreateView, UpdateView 
+from django.views.generic import View, TemplateView, ListView, CreateView, UpdateView, DeleteView 
 
 # models
 from tables.models import Word, Table
@@ -27,6 +27,11 @@ from django.urls import reverse, reverse_lazy
 import os
 # ************************************************* it doesn´t serve now 
 
+def obtain_owner_table(table_id):
+    table = Table.objects.filter(id = table_id)
+    owner_table_id = table[0].user_id
+    print('----------------owner-------------------', table[0].user_id)
+    return owner_table_id
 
 class xxxTitleTable(TemplateView) : 
     template_name = 'table/title.html'
@@ -95,12 +100,14 @@ class AccessMenuTable(TemplateView) :
         table_id = kwargs['table_id']
         title = kwargs['title']
         data_table = self.obtainAssetsTable(table_id)
+        owner_table = obtain_owner_table(table_id)
 
         return render(request, self.template_name, {
             'table_id': table_id,
             'title': title,
             'pdf_doc':data_table[0].pdf_doc,
-            'link':data_table[0].link
+            'link':data_table[0].link,
+            'owner_table':owner_table
         })
 
 class xxxCreateVocabularyTable(View):
@@ -140,21 +147,24 @@ class CreateVocabularyTable(CreateView):
     model = Word
     form_class = WordForm
 
+
     def get_context_data(self, **kwargs):
+        owner_table_id = obtain_owner_table(self.kwargs['table_id'])
+
         context = super(CreateVocabularyTable, self).get_context_data(**kwargs)
         context['table_id'] = self.kwargs['table_id']
         context['title'] = self.kwargs['title']
+        context['owner_table'] = owner_table_id
 
         return context
 
     #post is executed after to form_valid
     def _post(self, request): # request is used to get data sent by the form
-        print('------------------create vocabulary------------',request.POST)
         pass
 
     def form_valid(self, form):
         form.instance.table_id = self.kwargs['table_id']
-        return super().form_valid(form)
+        return super().form_valid(form)       
 
     def get_success_url(self):
         return reverse_lazy('tables_app:create_vocabulary', kwargs = {
@@ -184,9 +194,12 @@ class WordListView(ListView):
     
     #overwriting context
     def get_context_data(self, **kwargs):
+        owner_table = obtain_owner_table(self.kwargs['table_id'])
+
         context = super(WordListView, self).get_context_data(**kwargs)
         context['table_id'] = self.kwargs['table_id']
         context['title'] = self.kwargs['title']
+        context['owner_table'] = owner_table
 
         return context
 
@@ -227,20 +240,21 @@ class AssetsTable(View):
         table_id = kwargs['table_id']
         asset = kwargs['asset']
         datatable = Table.objects.filter(id = table_id)
+        owner_table_id = obtain_owner_table(self.kwargs['table_id'])
 
         pdfpath = self.obtain_pdf_path(datatable)
-        print('-------------------link-------------------------', datatable[0].link )
 
         context = {
             'title':datatable[0].title,
             'table_id':datatable[0].id,
             'link':datatable[0].link ,
             'asset':asset,
-            'pdfpath':pdfpath
+            'pdfpath':pdfpath,
+            'owner_table':owner_table_id
         }
         return render(request, self.template_name, context)
 
-class UpdatePdfTable(UpdateView):
+class UpdateTable(UpdateView):
     template_name = 'table/title.html'
     model = Table
     form_class = TableForm
@@ -248,7 +262,6 @@ class UpdatePdfTable(UpdateView):
 
     def adsfasdfget_context_data(self, **kwargs):
         context = super(UpdatePdfTable, self).get_context_data(**kwargs)
-        print('----------------update context--------------', self.object)
 
         context['table_id'] = self.kwargs['table_id']
         context['title'] = self.kwargs['title']
@@ -258,11 +271,13 @@ class UpdatePdfTable(UpdateView):
     #if an error 403 is through, it is an segurity error
     def get_success_url(self):
         project = self.object
-        print('----------------update--------------', project.id)
         return reverse_lazy('user_app:user')    
 
     
-
+class RemoveTable(DeleteView):
+    model = Table
+    template_name = 'table/remove table.html'
+    success_url = reverse_lazy('tables_app:table_collection')
 
 def download_pdf(request, pdfpath) :
     if os.path.exists(pdfpath):

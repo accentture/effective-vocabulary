@@ -7,16 +7,19 @@
     <div class="table-container">
         {% include 'includes/description_table.html' %}
         
-        <form class="form-of-words" action="" method="POST">
-            {{ form.media }}
-            {{ form.as_p }}
-            
-            <div class="button">
-                <input type="submit" value="Guardar">
-            </div>
+        {% if owner_table == user.id %}
+            <form class="form-of-words" action="" method="POST">
+                {{ form.media }}
+                {{ form.as_p }}
+                
+                <div class="button">
+                    <input type="submit" value="Guardar">
+                </div>
 
-            <span>{% csrf_token %}</span>
-        </form>
+                <span>{% csrf_token %}</span>
+            </form>
+
+        {% endif %}
     </div>
     
 {% endblock %}

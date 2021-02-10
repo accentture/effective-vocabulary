@@ -50,7 +50,7 @@ ul.menu-vocabulary li {
   min-width: 100%;
   height: 40px;
   line-height: 40px;
-  background-color: rgb(226, 9, 9);
+  background-color: #ba0000;
   border-radius: 5px;
   list-style: none;
   text-align: center;
@@ -83,8 +83,9 @@ ul.menu-vocabulary li a {
   display: grid;
   height: 30px;
   line-height: 30px;
-  grid-template-columns: 1fr 1fr 4fr;
+  grid-template-columns: 15% 15% 67%;
   grid-gap: 10px;
+  height: auto;
 }
 .table-container ul.description {
   width: 100%;
@@ -102,6 +103,7 @@ div#cke_id_inverosimil_relation {
 form.form-of-words p input[type="text"] {
   width: 100%;
   height: 24px;
+  background-color: #e0e0ad;
 }
 .button {
   width: 100px;
@@ -125,6 +127,7 @@ form.form-of-words p input[type="text"] {
 }
 .form-search input.search-field {
   padding: 7px;
+  background-color: #e0e0ad;
 }
 .form-search button.search-button {
   padding: 7px;
@@ -135,42 +138,122 @@ form.form-of-words p input[type="text"] {
 
 ul.word_list {
   display: grid;
-  grid-template-columns: 1fr 1fr 4fr;
+  grid-template-columns: 15% 15% 67%;
+  border-top: 1px solid;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  height: auto;
+}
+ul.word_list:last-child {
+  border-bottom: 1px solid;
 }
 ul.word_list li {
   text-align: left;
+  overflow-wrap: break-word;
 }
 ul.word_list li strong {
   color: #6666e4;
   font-size: 18px;
 }
-
+ul.word_list li p {
+  overflow-wrap: break-word;
+}
+ul.word_list li em {
+  color: yellow;
+  font-size: 18px;
+}
+p.without-words-message {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-style: oblique;
+}
 /* ================================================== table collection */
-
+h2.description-tables {
+  margin-top: 15px;
+}
+ul.table-collection {
+  margin-top: 15px;
+}
 ul.table-collection li {
   height: 30px;
   line-height: 30px;
   text-align: center;
-  background-color: rgb(226, 9, 9);
+
   border-radius: 5px;
   list-style: none;
   margin-bottom: 5px;
+  display: grid;
+  grid-template-columns: 5fr 1fr 1fr;
+  grid-gap: 5px;
 }
 
 ul.table-collection li a {
   color: white;
   text-decoration: none;
 }
-
+button.update-table {
+  width: 210px;
+  height: 33px;
+  margin: 0 auto;
+  margin-top: 10px;
+  background-color: green;
+  cursor: pointer;
+}
+button.update-table:hover {
+  background-color: rgb(20, 160, 20);
+}
+button.update-table a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+div.option-table {
+  border-radius: 3px;
+}
+div.check {
+  background-color: #121b46;
+}
+div.check:hover {
+  background-color: #1a2972;
+}
+div.update {
+  background-color: #495a04;
+}
+div.update:hover {
+  background-color: #758f0e;
+}
+div.delete {
+  background-color: #860b0b;
+}
+div.delete:hover {
+  background-color: #b41515;
+}
+div.check a,
+div.update a,
+div.delete a {
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+}
+.remove-warning {
+  text-align: center;
+  margin: 10px;
+}
 /* ========================================== table collection other users */
 ul.other-tables-description {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
   background-color: #141447;
   color: white;
+  margin-top: 15px;
 }
 ul.other-tables-description li {
   list-style: none;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 5px;
+  text-align: center;
 }
 
 ul.list-other-tables li {
@@ -178,23 +261,27 @@ ul.list-other-tables li {
   line-height: 30px;
   margin-top: 5px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 5px;
   justify-content: space-around;
-  background-color: #034e21;
   border-radius: 5px;
   color: white;
 }
-ul.list-other-tables li:hover {
-  background-color: #04682c;
-}
 ul.list-other-tables li div {
+  display: block;
   text-align: center;
+  background-color: #034e21;
+  border-radius: 4px;
+}
+ul.list-other-tables li div:first-child:hover {
+  display: block;
+  text-align: center;
+  background-color: #097233;
 }
 ul.list-other-tables li div a {
   color: white;
   text-decoration: none;
   display: block;
-  cursor: pinter;
 }
 /* pagination */
 .pagination {

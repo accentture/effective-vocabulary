@@ -16,6 +16,7 @@ h1 {
 }
 div.user-control {
   width: 80px;
+  height: 76px;
   display: grid;
   grid-template-rows: 1fr 1fr;
   z-index: 2;
@@ -51,7 +52,7 @@ div.user-control ul li.logout a {
 }
 .main-container {
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1fr 84%;
 }
 .main-container nav.container-menu {
   min-height: 100%;
@@ -78,7 +79,6 @@ div.user-control ul li.logout a {
   cursor: pointer;
 }
 .main-container div.container-tables {
-  flex-basis: 84%;
   background-color: rgb(17, 15, 15);
   color: rgb(223, 209, 209);
 }

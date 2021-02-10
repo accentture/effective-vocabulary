@@ -7,9 +7,12 @@
             {% if pdfpath != '' %}
                 <P>ENLACE: <a href="{% url 'tables_app:download' pdfpath=pdfpath %}">Descargar</a></P>
             {% else %}
-                <p>Esta tabla no tiene un documento PDF</p>
+                 <p>Esta tabla no tiene un documento PDF</p>
 
-                <button><a href="{% url 'tables_app:updateassets' pk=table_id %}">Actualizar</a></button>
+                
+                {% if owner_table == user.id %}
+                    <button class="update-table"><a href="{% url 'tables_app:updatetable' pk=table_id %}">Actualizar</a></button>
+                {% endif %}
 
             {% endif %}
 
@@ -19,7 +22,11 @@
                 <P>ENLACE: <a href="{{link}}">sitio web</a></P>
             {% else %}
                 <p>Esta tabla no tiene vínculo a un sitio web</p>
-                <button><a href="{% url 'tables_app:updateassets' pk=table_id %}">Actualizar</a></button>
+
+                {% if owner_table == user.id %}
+                    <button class="update-table"><a href="{% url 'tables_app:updatetable' pk=table_id %}">Actualizar</a></button>
+                {% endif %}
+                
             {% endif %}
             
         {% endif %}

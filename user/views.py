@@ -4,10 +4,9 @@ from django.shortcuts import render, redirect
 from user.forms import UserForm, UserProfileForm
 
 # importing View
-from django.views.generic import View, TemplateView, ListView
+from django.views.generic import View, TemplateView, ListView, CreateView
 
-#models
-from user.models import User
+from django.contrib.auth.models import User
 
 #modules of authentication
 from django.contrib.auth import authenticate, login, logout
@@ -15,6 +14,7 @@ from django.contrib.auth import authenticate, login, logout
 #flash messages
 from django.contrib import messages
 
+from django.urls import reverse_lazy
 
 def register(request) :
     user_form = UserForm()
@@ -37,6 +37,7 @@ def register(request) :
         'user_form': user_form, 
         'user_profile_form':user_profile_form
     })
+
 
 class LoginView(View):
     template_name = 'log_in.html'
