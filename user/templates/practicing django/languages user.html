@@ -1,0 +1,15 @@
+{% extends 'layouts/layout.html' %}
+
+{% block main_content %}
+    
+    <h3>Idiomas de {{user|upper}}</h3>
+
+    <ul>
+        {% for language in languages %}
+            <li>{{language}}</li>
+        {% endfor %}
+    </ul>
+    
+{% endblock %}
+
+

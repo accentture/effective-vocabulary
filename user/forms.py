@@ -36,14 +36,14 @@ class UserForm(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
-        self.fields['language'].widget.attrs['placeholder'] = 'Idioma que quieres aprender'
+        self.fields['languages'].widget.attrs['placeholder'] = 'Idioma que quieres aprender'
 
 
     class Meta:
         model = UserProfile
-        fields = ('language',)
+        fields = ('languages',)
         labels = {
-            'language' : '',
+            'languages' : 'Elige idioma a aprender',
 
         }
 

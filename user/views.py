@@ -4,9 +4,12 @@ from django.shortcuts import render, redirect
 from user.forms import UserForm, UserProfileForm
 
 # importing View
-from django.views.generic import View, TemplateView, ListView, CreateView
+from django.views.generic import View, TemplateView, ListView, CreateView, DetailView
 
 from django.contrib.auth.models import User
+
+#models
+from .models import UserProfile
 
 #modules of authentication
 from django.contrib.auth import authenticate, login, logout
@@ -60,6 +63,25 @@ class LoginView(View):
                 login(request, user)
                 return redirect('user_app:user')
 
+class LanguagesUserListView(ListView):
+    template_name = 'practicing django/languages user.html'
+    context_object_name = 'languages'
+
+    def get_queryset(self):
+
+        print('-------------current- user------------', self.request.user.id)
+        languages_user = UserProfile.objects.get(user_id = 9) # id = 9, user = pro
+        return languages_user.languages.all() # to get list of la relation ManyToMany, use all()
+
+
+# DetailView help to see in detail a register of model of my database
+# DetailView is recommendable to use when get a lot information of a register 
+class DetailUserDetailView(DetailView):
+    template_name = 'practicing django/detail user.html'
+    model = User
+
+    # it is not necessary to use context_object_name
+    # context_object_name = 'detailuser'
 
 def user_logout(request):
     logout(request)

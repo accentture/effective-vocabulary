@@ -34,6 +34,10 @@
                     <li><a href="{% url 'tables_app:title' action_table='set_table' %}">Nueva Tabla</a></li>
                     <li><a href="{% url 'tables_app:table_collection' %}">Mis tablas</a></li>
                     <li><a href="{% url 'tables_app:other_tables' %}">Otras tablas</a></li>
+
+                    <!-- learning django -->
+                    <li><a href="{% url 'user_app:languagesuser' %}">Lenguajes usuario</a></li>
+                    <li><a href="{% url 'user_app:detailuser' pk=user.id %}">Detalle usuario</a></li>
                 {% else %}
                     <li><a href="{% url 'user_app:log_in' %}">Iniciar Sesión</a></li>
                     <li><a href="{% url 'user_app:register' %}">Registrarse</a></li>

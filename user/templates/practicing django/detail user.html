@@ -1,0 +1,21 @@
+{% extends 'layouts/layout.html' %}
+
+{% block main_content %}
+    
+    <h3>Detalle del usuario {{user|upper}}</h3>
+
+
+    
+    <!-- object is used for DetailView -->
+    <p>{{ object }}</p>
+
+    <h3>Todos los datos</h3>
+    <p>{{ user.username }}</p>
+    <p>{{ user.last_name }}</p>
+    <p>{{ user.email }}</p>
+    <p>{{ user.password }}</p>
+    <p>{{ user.last_login }}</p>
+    
+{% endblock %}
+
+

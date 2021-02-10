@@ -26,5 +26,7 @@ urlpatterns = [
     path('registro/', views.register, name = 'register'),
     path('usuario/', views.user, name = 'user'),
     path('cerrar-sesion/', views.user_logout, name = 'logout'),
+    path('lista-idiomas/', views.LanguagesUserListView.as_view(), name = 'languagesuser'),
+    path('detalle-usuario/<pk>', views.DetailUserDetailView.as_view(), name = 'detailuser'),
 
 ]
