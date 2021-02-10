@@ -25,8 +25,8 @@ def register(request) :
         user_profile_form = UserProfileForm(request.POST)
 
         if user_form.is_valid() and user_profile_form.is_valid():
+            print('-----------------register feo-----------', user_form)
             user = user_form.save()
-            print('-----------------register-----------', user)
             user_profile_form = user_profile_form.save(commit = False)
             user_profile_form.user = user
             user_profile_form.save()
@@ -58,7 +58,7 @@ class LoginView(View):
             if user :
                 messages.success(request, 'Bienvenido')
                 login(request, user)
-                return redirect('tables_app:title', action_table = 'set_table')
+                return redirect('user_app:user')
 
 
 def user_logout(request):

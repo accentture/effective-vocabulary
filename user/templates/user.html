@@ -1,6 +1,12 @@
 {% extends 'layouts/layout.html' %}
 
 {% block main_content %}
-    <h3>campo de usuario</h3>
-    <p>User: {{user}}</p>
+    {% if user.email %}
+        <h3 class="wellcome-user">{{user|upper}} BIENVENIDO A VOCABULARIO EFECTIVO</h3>
+        
+    {% else %}
+        <h3 class="wellcome-user">BIENVENIDO A VOCABULARIO EFECTIVO, REGÍSTRATE PARA INGRESAR</h3>
+        
+    {% endif %}
+
 {%  endblock %}

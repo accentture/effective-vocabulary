@@ -35,8 +35,8 @@
                     <li><a href="{% url 'tables_app:table_collection' %}">Mis tablas</a></li>
                     <li><a href="{% url 'tables_app:other_tables' %}">Otras tablas</a></li>
                 {% else %}
-                    <li><a href="{% url 'user_app:register' %}">Registrarse</a></li>
                     <li><a href="{% url 'user_app:log_in' %}">Iniciar Sesión</a></li>
+                    <li><a href="{% url 'user_app:register' %}">Registrarse</a></li>
                 {% endif %}
             </ul>
         </nav>

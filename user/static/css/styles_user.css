@@ -17,6 +17,11 @@
   font-size: 15px;
   background-color: #e0e0ad;
 }
+.wellcome-user {
+  text-align: center;
+  height: auto;
+  margin-top: 150px;
+}
 /* =========================================================== form of login */
 
 .form-login {
